@@ -1,0 +1,30 @@
+# Install the textblob library
+!pip install textblob
+
+# Import necessary libraries
+from textblob import TextBlob
+
+# Sample dataset of texts and their expected sentiments
+dataset = [
+    ("I love this product! It's amazing.", "positive"),
+    ("This is the worst experience I've ever had.", "negative"),
+    ("I'm not sure how I feel about this.", "neutral"),
+    ("Absolutely fantastic service!", "positive"),
+    ("The food was okay, nothing special.", "neutral"),
+    ("I hate waiting in long lines.", "negative"),
+    ("What a wonderful day!", "positive"),
+    ("I feel indifferent about the movie.", "neutral"),
+    ("Terrible customer support!", "negative"),
+    ("This is the best thing ever!", "positive"),
+]
+
+def analyze_sentiment(text):
+    """Analyzes the sentiment of the given text and returns 'positive', 'negative', or 'neutral'."""
+    analysis = TextBlob(text)
+    # Classify the sentiment based on polarity
+    if analysis.sentiment.polarity > 0:
+        return 'positive'
+    elif analysis.sentiment.polarity < 0:
+        return 'negative'
+    else:
+        return 'neutral'
