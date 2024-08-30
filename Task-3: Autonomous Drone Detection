@@ -7,21 +7,60 @@ from tensorflow import keras
 model = keras.models.load_model('path/to/object_detection_model')
 
 # Define drone control functions (replace with actual drone API calls)
-def move_forward():
-  # Code to move the drone forward
-  pass
+def move_forward(drone_speed, drone_position):
+    # Calculate the new position of the drone
+    new_x = drone_position['x'] + drone_speed * math.cos(math.radians(drone_position['yaw']))
+    new_y = drone_position['y'] + drone_speed * math.sin(math.radians(drone_position['yaw']))
 
-def move_backward():
-  # Code to move the drone backward
-  pass
+    # Update the drone's position
+    drone_position['x'] = new_x
+    drone_position['y'] = new_y
 
-def turn_left():
-  # Code to turn the drone left
-  pass
+    # Return the updated drone position
+    return drone_position
 
-def turn_right():
-  # Code to turn the drone right
-  pass
+def move_backward(drone_speed, drone_position):
+    # Calculate the new position of the drone
+    new_x = drone_position['x'] - drone_speed * math.cos(math.radians(drone_position['yaw']))
+    new_y = drone_position['y'] - drone_speed * math.sin(math.radians(drone_position['yaw']))
+
+    # Update the drone's position
+    drone_position['x'] = new_x
+    drone_position['y'] = new_y
+
+    # Return the updated drone position
+    return drone_position
+
+def turn_left(drone_position, turn_angle):
+    # Calculate the new yaw of the drone
+    new_yaw = drone_position['yaw'] - turn_angle
+
+    # Ensure the yaw is within the 0-360 degree range
+    if new_yaw < 0:
+        new_yaw += 360
+    elif new_yaw > 360:
+        new_yaw -= 360
+
+    # Update the drone's yaw
+    drone_position['yaw'] = new_yaw
+
+    # Return the updated drone position
+    return drone_position
+def turn_right(drone_position, turn_angle):
+    # Calculate the new yaw of the drone
+    new_yaw = drone_position['yaw'] + turn_angle
+
+    # Ensure the yaw is within the 0-360 degree range
+    if new_yaw < 0:
+        new_yaw += 360
+    elif new_yaw > 360:
+        new_yaw -= 360
+
+    # Update the drone's yaw
+    drone_position['yaw'] = new_yaw
+
+    # Return the updated drone position
+    return drone_position
 
 # Main navigation loop
 while True:
